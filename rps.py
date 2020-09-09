@@ -86,9 +86,10 @@ class Game:
     def play_game(self):
         while True:
             try:
-                number_rounds = int(input("How many rounds would you like to play?"))
+                number_rounds = int(input("How many rounds would"
+                                          " you like to play?"))
                 break
-            except ValueError:    
+            except ValueError:
                 print("this is not a correct input")
         print("Game start!")
         for round in range(number_rounds):
