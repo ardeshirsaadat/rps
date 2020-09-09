@@ -25,8 +25,7 @@ class HumanPlayer(Player):
         while True:
             move_human = input("Choose rock, paper or scissors.").lower()
             if move_human in moves:
-                break
-        return move_human
+                return move_human
 
 
 class ReflectPlayer(Player):
@@ -42,16 +41,15 @@ class ReflectPlayer(Player):
 
 
 class CyclePlayer(Player):
-    def __init__(self):
-        super().__init__()
-        self.moves = moves
-
     def move(self):
         if self.my_move == 0:
             return random.choice(moves)
-        else:
-            self.moves.pop(self.moves.index(self.my_move))
-            return random.choice(self.move)
+        elif self.my_move == "rock":
+            return "paper"
+        elif self.my_move == "paper":
+            return "scissors"
+        elif self.my_move == "scissors":
+            return "rock"
 
 
 def beats(one, two):
@@ -86,10 +84,16 @@ class Game:
         self.p2.learn(move2, move1)
 
     def play_game(self):
+        number_rounds = int(input("How many rounds would you like to play?"))
         print("Game start!")
-        for round in range(3):
-            print(f"Round {round}:")
+        for round in range(number_rounds):
+            print(f"Round {round + 1}:")
             self.play_round()
+        self.who_won()
+
+    def play_single_game(self):
+        print("Game start")
+        self.play_round()
         self.who_won()
 
     def keep_score(self, one, two):
