@@ -84,7 +84,12 @@ class Game:
         self.p2.learn(move2, move1)
 
     def play_game(self):
-        number_rounds = int(input("How many rounds would you like to play?"))
+        while True:
+            try:
+                number_rounds = int(input("How many rounds would you like to play?"))
+                break
+            except ValueError:    
+                print("this is not a correct input")
         print("Game start!")
         for round in range(number_rounds):
             print(f"Round {round + 1}:")
