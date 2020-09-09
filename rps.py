@@ -24,9 +24,11 @@ class RandomPlayer(Player):
 
 class HumanPlayer(Player):
     def move(self):
-        move_human = input("Rock, paper or scissors?")
+        while True:
+            move_human = input("Choose rock, paper or scissors.").lower()
+            if move_human in moves:
+               break
         return move_human
-
 
 class ReflectPlayer(Player):
     def __init__(self, opponent):
