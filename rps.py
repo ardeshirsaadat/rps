@@ -96,8 +96,8 @@ class Game:
             print(f"Round {round}:")
             
             self.play_round()
-            
-        print("Game over!")
+        self.who_won()    
+        
     
 
     def keep_score(self, one, two):
@@ -106,8 +106,16 @@ class Game:
             self.point_p1 +=1
         elif person_won == "p2":
             self.point_p2 +=1  
+    
 
-
+    def who_won(self):
+        if self.point_p1 > self.point_p2:
+            print("player 1 wins the match")
+        elif self.point_p2 > self.point_p1:
+            print("player 2 wins the match")
+        else:
+            print("the match is a tie!! good job both of you!")        
+        print("Game over!")
 if __name__ == '__main__':
     game = Game(HumanPlayer(), CyclePlayer())
     game.play_game()
