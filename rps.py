@@ -3,16 +3,11 @@ moves = ['rock', 'paper', 'scissors']
 
 
 class Player:
-    def __init__(self):
-        self.my_move = 0
-        self.their_move = 0
-
     def move(self):
         return 'rock'
 
     def learn(self, my_move, their_move):
-        self.my_move = my_move
-        self.their_move = their_move
+        pass
 
 
 class RandomPlayer(Player):
@@ -29,42 +24,43 @@ class HumanPlayer(Player):
 
 
 class ReflectPlayer(Player):
-    def __init__(self, opponent):
-        super().__init__()
-        self.opponent = opponent
+    def __init__(self):
+        self.move_reflect = random.choice(moves)
 
     def move(self):
-        if self.opponent.my_move == 0:
-            return random.choice(moves)
-        else:
-            return self.opponent.my_move
+        return self.move_reflect
+
+    def learn(self, my_move, their_move):
+        self.move_reflect = their_move
 
 
 class CyclePlayer(Player):
+    def __init__(self):
+        self.move_cycle = random.choice(moves)
+
     def move(self):
-        if self.my_move == 0:
-            return random.choice(moves)
-        elif self.my_move == "rock":
+        if self.move_cycle == "rock":
             return "paper"
-        elif self.my_move == "paper":
+        elif self.move_cycle == "paper":
             return "scissors"
-        elif self.my_move == "scissors":
+        elif self.move_cycle == "scissors":
             return "rock"
+
+    def learn(self, my_move, their_move):
+        self.move_cycle = my_move
 
 
 def beats(one, two):
-    if ((one == 'rock' and two == 'scissors') or
-       (one == 'scissors' and two == 'paper') or
-       (one == 'paper' and two == 'rock')):
+    if one == two:
+        print("its a tie")
+    elif ((one == 'rock' and two == 'scissors') or
+          (one == 'scissors' and two == 'paper') or
+          (one == 'paper' and two == 'rock')):
         print("player 1 wins")
         return "p1"
-    elif ((one == 'rock' and two == 'paper') or
-          (one == 'scissors' and two == 'rock') or
-          (one == 'paper' and two == 'scissors')):
+    else:
         print("player1 loses")
         return "p2"
-    else:
-        print("its a tie")
 
 
 class Game:
@@ -95,6 +91,8 @@ class Game:
         for round in range(number_rounds):
             print(f"Round {round + 1}:")
             self.play_round()
+        print((f"player1 final score: {self.point_p1} "
+              f"player2 final score: {self.point_p2}"))
         self.who_won()
 
     def play_single_game(self):
@@ -120,5 +118,5 @@ class Game:
 
 
 if __name__ == '__main__':
-    game = Game(HumanPlayer(), CyclePlayer())
+    game = Game(HumanPlayer(), ReflectPlayer())
     game.play_game()
